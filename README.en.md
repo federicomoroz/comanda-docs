@@ -6,7 +6,7 @@
 
 > The code is private. This repository holds the public documentation: what it does, how it works inside and why it is built this way.
 >
-> The starting menu comes from the public online menu of a real grill. Everything else (drinks, tables, staff, ingredients, costs and tax data) is simulated, and invoicing runs against a simulated ARCA, the Argentine tax authority: invoices print as "not valid for tax purposes". The app itself is in Spanish.
+> The tables, staff, ingredients, costs and tax data on screen are test data, and invoicing runs against a simulated ARCA, the Argentine tax authority: invoices print as "not valid for tax purposes". The app itself is in Spanish.
 
 ![An order end to end: the waiter enters it on the tablet, it shows up on the kitchen screen, the kitchen marks it ready, the register takes payment and issues invoice B with its QR](docs/media/app_en.gif)
 

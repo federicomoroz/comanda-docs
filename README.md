@@ -6,7 +6,7 @@
 
 > El código es privado. Este repositorio tiene la documentación pública: qué hace, cómo funciona por dentro y por qué está hecho así.
 >
-> La carta inicial sale de la carta online pública de una parrilla real. Todo lo demás (bebidas, mesas, personal, insumos, costos y datos fiscales) es simulado, y la facturación usa un ARCA simulado: los comprobantes salen como «sin validez fiscal».
+> Las mesas, el personal, los insumos, los costos y los datos fiscales que se ven son de prueba, y la facturación usa un ARCA simulado: los comprobantes salen como «sin validez fiscal».
 
 ![Un pedido de punta a punta: el mozo lo carga en la tablet, aparece en la pantalla de la cocina, la cocina lo marca listo, la caja cobra y emite la factura B con su QR](docs/media/app.gif)
 
