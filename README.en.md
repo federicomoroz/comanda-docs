@@ -72,6 +72,13 @@ The internet is only needed to invoice and to alert the owner, and both wait in 
 
 The interactive version, with connections animated by kind, is [on the site](https://federicomoroz.github.io/diagramas/comanda/arquitectura_en.html).
 
+### My own services it uses
+
+| Service | What for | Links |
+|---|---|---|
+| **notify-router** | The owner's alerts. Comanda saves each alert in its outbox and sends it over; notify-router decides who gets it and through which channel (Telegram, email, Slack or webhook). Each alert carries an idempotency key. | [Repo](https://github.com/federicomoroz/notify-router) · [Page](https://federicomoroz.github.io/en/tools/#notify-router) |
+| **webhook-logger** | The destination channel in the end-to-end tests of the alerts: with each link cut on purpose, every alert arrived exactly once. | [Repo](https://github.com/federicomoroz/webhook-logger) · [Demo](https://webhook-logger-9paz.onrender.com) · [Page](https://federicomoroz.github.io/en/tools/#webhook-logger) |
+
 ### Stack
 
 | | |

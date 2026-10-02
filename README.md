@@ -72,6 +72,13 @@ Internet solo hace falta para facturar y para avisarle al dueño, y las dos cosa
 
 La versión interactiva, con las conexiones animadas por tipo, está en [el sitio](https://federicomoroz.github.io/diagramas/comanda/arquitectura.html).
 
+### Servicios propios que usa
+
+| Servicio | Para qué | Links |
+|---|---|---|
+| **notify-router** | Los avisos al dueño. Comanda guarda cada aviso en su outbox y se lo manda; notify-router decide a quién y por qué canal (Telegram, mail, Slack o webhook). Cada aviso viaja con una clave de idempotencia. | [Repo](https://github.com/federicomoroz/notify-router) · [Página](https://federicomoroz.github.io/es/tools/#notify-router) |
+| **webhook-logger** | Canal de destino en las pruebas de punta a punta de los avisos: con cada eslabón cortado a propósito, cada aviso llegó una sola vez. | [Repo](https://github.com/federicomoroz/webhook-logger) · [Demo](https://webhook-logger-9paz.onrender.com) · [Página](https://federicomoroz.github.io/es/tools/#webhook-logger) |
+
 ### Stack
 
 | | |
