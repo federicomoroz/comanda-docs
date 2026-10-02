@@ -6,7 +6,7 @@
 
 > The code is private. This repository holds the public documentation: what it does, how it works inside and why it is built this way.
 >
-> The tables, staff, ingredients, costs and tax data on screen are test data, and invoicing runs against a simulated ARCA, the Argentine tax authority: invoices print as "not valid for tax purposes". The app itself is in Spanish.
+> The tables, staff, ingredients, costs and tax data on screen are test data, and the invoices shown were authorized by a simulated ARCA, the Argentine tax authority: they print as "not valid for tax purposes". The app itself is in Spanish.
 
 ![An order end to end: the waiter enters it on the tablet, it shows up on the kitchen screen, the kitchen marks it ready, the register takes payment and issues invoice B with its QR](docs/media/app_en.gif)
 
@@ -37,7 +37,7 @@
 <td><img src="docs/media/pantalla-margenes.png" alt="Admin, recipes and margins: the ingredient cost of each dish and its margin, with those below target in red"></td>
 </tr>
 <tr>
-<td><b>Register.</b> Invoice B with CAE and ARCA's QR, simulated in this version.</td>
+<td><b>Register.</b> Invoice B with CAE and ARCA's QR, from a simulated ARCA.</td>
 <td><b>Margins.</b> With each recipe's cost, every dish shows what it earns.</td>
 </tr>
 </table>
@@ -76,6 +76,7 @@ The interactive version, with connections animated by kind, is [on the site](htt
 
 | Service | What for | Links |
 |---|---|---|
+| **ArcaSim** | ARCA's web services for development and testing. Billing gets its CAEs with ARCA's real client (`Arca.Client`, from the same repository); in homologación mode that client talks to ArcaSim, and production only changes the address and the certificate. Billing's tests use it to walk the real path: CAE granted, rejection by ARCA and ARCA down. | [Repo](https://github.com/federicomoroz/arcasim) · [Page](https://federicomoroz.github.io/en/projects/arcasim/) |
 | **notify-router** | The owner's alerts. Comanda saves each alert in its outbox and sends it over; notify-router decides who gets it and through which channel (Telegram, email, Slack or webhook). Each alert carries an idempotency key. | [Repo](https://github.com/federicomoroz/notify-router) · [Page](https://federicomoroz.github.io/en/tools/#notify-router) |
 | **webhook-logger** | The destination channel in the end-to-end tests of the alerts: with each link cut on purpose, every alert arrived exactly once. | [Repo](https://github.com/federicomoroz/webhook-logger) · [Demo](https://webhook-logger-9paz.onrender.com) · [Page](https://federicomoroz.github.io/en/tools/#webhook-logger) |
 
@@ -86,7 +87,7 @@ The interactive version, with connections animated by kind, is [on the site](htt
 | Backend | C# · .NET 8 · ASP.NET Core MVC · SignalR · EF Core 8 + Npgsql |
 | Frontend | React 19 · TypeScript 5.9 · Vite, served by the same server |
 | Data | PostgreSQL 17, one database per service |
-| Integrations | notify-router (Python · FastAPI), ESC/POS printers over TCP 9100, ARCA (WSFEv1, simulated) |
+| Integrations | notify-router (Python · FastAPI), ESC/POS printers over TCP 9100, ARCA (WSAA + WSFEv1 with `Arca.Client`; ArcaSim in development) |
 | Deployment | Docker Compose on a computer at the restaurant |
 | Tests | xUnit · Testcontainers · WebApplicationFactory |
 
@@ -115,7 +116,7 @@ The decision to move invoicing into its own service, the alternatives that were 
 
 ### Tests
 
-173 tests: 146 for Comanda and 27 for billing. Integration tests run against real PostgreSQL with Testcontainers, and Comanda's also start the billing service in memory, with its own database, talking over HTTP. Among other things they check:
+176 tests: 146 for Comanda and 30 for billing. Integration tests run against real PostgreSQL with Testcontainers, and Comanda's also start the billing service in memory, with its own database, talking over HTTP. Among other things they check:
 
 - that two cashiers charging the same balance at once charge it once, and that five waiters sending at once get different ticket numbers;
 - that only an admin changes settings, and that a stock import failing halfway saves nothing;

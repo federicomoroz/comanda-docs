@@ -6,7 +6,7 @@
 
 > El código es privado. Este repositorio tiene la documentación pública: qué hace, cómo funciona por dentro y por qué está hecho así.
 >
-> Las mesas, el personal, los insumos, los costos y los datos fiscales que se ven son de prueba, y la facturación usa un ARCA simulado: los comprobantes salen como «sin validez fiscal».
+> Las mesas, el personal, los insumos, los costos y los datos fiscales que se ven son de prueba, y las facturas que se ven las autorizó un ARCA simulado: salen como «sin validez fiscal».
 
 ![Un pedido de punta a punta: el mozo lo carga en la tablet, aparece en la pantalla de la cocina, la cocina lo marca listo, la caja cobra y emite la factura B con su QR](docs/media/app.gif)
 
@@ -37,7 +37,7 @@
 <td><img src="docs/media/pantalla-margenes.png" alt="Administración, recetas y márgenes: el costo de los insumos de cada plato y su margen, con los que quedaron por debajo del objetivo en rojo"></td>
 </tr>
 <tr>
-<td><b>Caja.</b> Factura B con CAE y el QR de ARCA, simulado en esta versión.</td>
+<td><b>Caja.</b> Factura B con CAE y el QR de ARCA, de un ARCA simulado.</td>
 <td><b>Márgenes.</b> Con el costo de la receta, cada plato muestra cuánto deja.</td>
 </tr>
 </table>
@@ -76,6 +76,7 @@ La versión interactiva, con las conexiones animadas por tipo, está en [el siti
 
 | Servicio | Para qué | Links |
 |---|---|---|
+| **ArcaSim** | Los web services de ARCA para desarrollar y probar. Facturación pide los CAE con el cliente real de ARCA (`Arca.Client`, del mismo repositorio); en modo homologación ese cliente habla con ArcaSim, y para producción solo cambian la dirección y el certificado. Los tests de Facturación lo usan para recorrer el camino real: CAE otorgado, rechazo de ARCA y ARCA caída. | [Repo](https://github.com/federicomoroz/arcasim) · [Página](https://federicomoroz.github.io/es/projects/arcasim/) |
 | **notify-router** | Los avisos al dueño. Comanda guarda cada aviso en su outbox y se lo manda; notify-router decide a quién y por qué canal (Telegram, mail, Slack o webhook). Cada aviso viaja con una clave de idempotencia. | [Repo](https://github.com/federicomoroz/notify-router) · [Página](https://federicomoroz.github.io/es/tools/#notify-router) |
 | **webhook-logger** | Canal de destino en las pruebas de punta a punta de los avisos: con cada eslabón cortado a propósito, cada aviso llegó una sola vez. | [Repo](https://github.com/federicomoroz/webhook-logger) · [Demo](https://webhook-logger-9paz.onrender.com) · [Página](https://federicomoroz.github.io/es/tools/#webhook-logger) |
 
@@ -86,7 +87,7 @@ La versión interactiva, con las conexiones animadas por tipo, está en [el siti
 | Backend | C# · .NET 8 · ASP.NET Core MVC · SignalR · EF Core 8 + Npgsql |
 | Frontend | React 19 · TypeScript 5.9 · Vite, servido por el mismo servidor |
 | Datos | PostgreSQL 17, una base por servicio |
-| Integraciones | notify-router (Python · FastAPI), impresoras ESC/POS por TCP 9100, ARCA (WSFEv1, simulado) |
+| Integraciones | notify-router (Python · FastAPI), impresoras ESC/POS por TCP 9100, ARCA (WSAA + WSFEv1 con `Arca.Client`; ArcaSim en desarrollo) |
 | Despliegue | Docker Compose en una PC del local |
 | Tests | xUnit · Testcontainers · WebApplicationFactory |
 
@@ -115,7 +116,7 @@ La decisión de sacar la facturación a un servicio propio, las alternativas que
 
 ### Tests
 
-173 tests: 146 de Comanda y 27 de Facturación. Los de integración corren contra PostgreSQL real con Testcontainers, y los de Comanda levantan también el servicio de Facturación en memoria, con su propia base, hablándose por HTTP. Entre otras cosas verifican:
+176 tests: 146 de Comanda y 30 de Facturación. Los de integración corren contra PostgreSQL real con Testcontainers, y los de Comanda levantan también el servicio de Facturación en memoria, con su propia base, hablándose por HTTP. Entre otras cosas verifican:
 
 - que dos cajeros cobrando el mismo saldo a la vez lo cobren una sola vez, y que cinco mozos enviando a la vez reciban números de comanda distintos;
 - que solo un administrador cambie la configuración, y que una carga de stock que falla a mitad no deje nada guardado;
