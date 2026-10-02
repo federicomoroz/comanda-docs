@@ -127,8 +127,3 @@ docker compose up -d --build  # queda en http://<IP de la PC>
 ```
 
 Levanta PostgreSQL, el servidor, Facturación y el servicio de respaldos. El agente de impresión y notify-router son perfiles opcionales (`--profile print`, `--profile notify`).
-
-### Lo que falta
-
-- **ARCA real.** Necesita el certificado digital del local. Se implementa detrás de `IFiscalAuthorizer` (WSAA + WSFEv1), se prueba en homologación y se cambia el modo desde Administración. Tipos de comprobante, IVA por alícuota, numeración, cola, CAE y QR ya están hechos.
-- **Varios locales en una instalación.** Hoy cada local tiene su servidor y su base. Es una decisión de producto.

@@ -127,8 +127,3 @@ docker compose up -d --build  # served at http://<computer's IP>
 ```
 
 It starts PostgreSQL, the server, billing and the backup service. The print agent and notify-router are optional profiles (`--profile print`, `--profile notify`).
-
-### Not done yet
-
-- **Real ARCA.** Needs the restaurant's digital certificate. It goes behind `IFiscalAuthorizer` (WSAA + WSFEv1), is tested against ARCA's test environment and switched on from the admin. Invoice types, VAT per rate, numbering, the queue, CAE and QR are already in place.
-- **Several restaurants on one installation.** Today each restaurant has its own server and database. That is a product decision.
